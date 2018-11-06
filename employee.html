@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Employee Registration Page</title>
+	<style type="text/css">
+		form{
+			text-align:center;
+			font-size: 30px;
+			padding: 20px;
+		}
+		button{
+			size: 50px
+			font-size: 40px;
+		}
+	</style>
+</head>
+<body>
+	<form id="employee_register">
+		<h1>Register Employee</h1>
+		Enter uname: <input type="text" name="username" id="username"/><br>
+		Enter Email: <input type="text" name="email" id="email"/><br>
+		Enter Phone: <input type="text" name="phone" id="phone"/><br>
+		Enter post  &nbsp;&nbsp;&nbsp;: <input type="text" name="post" id="post"/><br>
+		<button>Register</button> &nbsp;&nbsp;&nbsp;&nbsp;
+		<button>Cancel</button>
+	</form>
+
+	<script type="text/javascript">
+		function post_request() {
+		    var xhr = new XMLHttpRequest();
+		    var params = JSON.stringify({
+		        Records:{
+		            username: document.getElementById("username").value,
+		            email: document.getElementById("email").value,
+		            phone: document.getElementById("phone").value,
+		            post: document.getElementById("post").value
+		        }
+		    });
+		    xhr.open("POST", "https://mzywtvwyu0.execute-api.ap-southeast-1.amazonaws.com/test/upload", true);
+		   	xhr.setRequestHeader("Content-type", "application/json");
+		    xhr.onreadystatechange = function(){
+		        if(xhr.readyState === 4){
+		            if(xhr.status === 200){
+						a = xhr.responseText;
+						b = JSON.parse(a);
+						console.log(b);
+		                alert(b);
+		            }
+		            else{
+		                alert("I was unable to send your data. Please check errors.");
+		            }
+		        }
+		    };
+		    xhr.send(params);
+		    return false;
+		}
+		(function() {
+		    document.getElementById("employee_register").onsubmit = function() {
+		        post_request();
+			    return false;
+		    }
+		})();
+		</script>
+</body>
+</html>

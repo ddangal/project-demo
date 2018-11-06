@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Employee Registration Page</title>
+	<style type="text/css">
+		form{
+			text-align:center;
+			font-size: 30px;
+			padding: 20px;
+		}
+		button{
+			size: 50px
+			font-size: 40px;
+		}
+	</style>
+</head>
+<body>
+	<form id="company_register">
+		<h1>Register Company</h1>
+		Enter uname:&nbsp;&nbsp; <input type="text" name="username" id="username"/><br>
+		Enter Email:&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" name="email" id="email"/><br>
+		Enter Phone:&nbsp;&nbsp;&nbsp; <input type="text" name="phone" id="phone"/><br>
+		Enter location: <input type="text" name="post" id="post"/><br>
+		<button>Register</button> &nbsp;&nbsp;&nbsp;&nbsp;
+		<button>Cancel</button>
+	</form>
+
+	<script type="text/javascript">
+		function post_request() {
+			alert("here we are")
+		    var xhr = new XMLHttpRequest();
+		    var params = JSON.stringify({
+		        Records:{
+		            date: document.getElementById("date_id").value,
+		            customer: document.getElementById("customer_id").value,
+		            income: document.getElementById("income_id").value,
+		            expense: document.getElementById("expense_id").value
+		        }
+		    });
+		    xhr.open("POST", "https://gm056cb4j3.execute-api.us-east-1.amazonaws.com/dev/proj1", true);
+		    xhr.setRequestHeader("X-api-key", "7wkAeKj8rJ3CMwInzLYz1152zIQBuXoK9lAAtEHJ");
+		    xhr.setRequestHeader("Content-type", "application/json");
+		    xhr.onreadystatechange = function(){
+		        if(xhr.readyState === 4){
+		            if(xhr.status === 200){
+						a = xhr.responseText;
+						b = JSON.parse(a);
+						console.log(b);
+		                alert(b);
+		            }
+		            else{
+		                alert("I was unable to send your data. Please check errors.");
+		            }
+		        }
+		    };
+		    xhr.send(params);
+		    return false;
+		}
+		(function() {
+		    document.getElementById("company_register").onsubmit = function() {
+		        post_request();
+			    return false;
+		    }
+		})();
+		</script>
+
+</body>
+</html>
